@@ -1,50 +1,60 @@
 package ru.tim.mvc.PersonDao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tim.mvc.model.Person;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
+@Service
 public class PersonDao {
-    private static int ID_NUM = 0;
-    List<Person> list = new ArrayList<>();
 
-    {
-        list.add(new Person(++ID_NUM, "Tim"));
-        list.add(new Person(++ID_NUM, "Sam"));
-        list.add(new Person(++ID_NUM, "Tom"));
-        list.add(new Person(++ID_NUM, "Mary"));
-        list.add(new Person(++ID_NUM, "Mia"));
+    private final SessionFactory sessionFactory;
 
-
-    }
-
-    public List<Person> index(){
-        return list;
-    }
-
-    public Person show(int id){
-        return list.stream().filter(person -> person.getId() == id).findAny().orElse(null);
-    }
-
-//    public void create(String name){
-//        list.add(new Person(++ID_NUM, name));
-//    }
-
-    public void create(Person person){
-        person.setId(++ID_NUM);
-        list.add(person);
-    }
-
-    public void update(int id, Person newPerson){
-        Person personTOBeUpdated = show(id);
-        personTOBeUpdated.setName(newPerson.getName());
+    @Autowired
+    public PersonDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 
+    @Transactional(readOnly = true)
+    public List<Person> index() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Person> personList = session.createQuery("select p from Person p", Person.class).getResultList();
+        return personList;
+    }
+
+    @Transactional
+    public Person show(int id) {
+
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Person.class, id);
+
+    }
+
+    @Transactional
+    public void create(Person person) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(person);
+    }
+
+    @Transactional
+    public void update(int id, Person newPerson) {
+        Session session = sessionFactory.getCurrentSession();
+        Person ToUpdatePerson = session.get(Person.class, id);
+        ToUpdatePerson.setName(newPerson.getName());
+
+    }
+
+    @Transactional
     public void delete(int id) {
-        list.removeIf(el->el.getId()==id);
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(session.get(Person.class, id));
+
     }
 }

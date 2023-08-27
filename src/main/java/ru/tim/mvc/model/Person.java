@@ -1,10 +1,24 @@
 package ru.tim.mvc.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "Person")
 public class Person {
 
 
-
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotEmpty(message = "name should not be empty")
+    @Size(min = 2, max = 10, message = "min 2 and max 10 letters")
+//    @Email(message = "email wrong")
+    @Column
     private String name;
 
     public int getId() {
@@ -23,12 +37,11 @@ public class Person {
         this.name = name;
     }
 
-    public Person(){
+    public Person() {
 
     }
 
-    public Person(int id, String name) {
-        this.id = id;
+    public Person(String name) {
         this.name = name;
     }
 }
