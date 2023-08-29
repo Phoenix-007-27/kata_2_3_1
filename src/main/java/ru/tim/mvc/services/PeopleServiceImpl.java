@@ -3,46 +3,47 @@ package ru.tim.mvc.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tim.mvc.dao.PersonDao;
 import ru.tim.mvc.model.Person;
-import ru.tim.mvc.repositories.PeopleRepository;
-
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @Transactional(readOnly = true)
-public class PeopleServece {
+public class PeopleServiceImpl  {
 
-    private final PeopleRepository peopleRepository;
+    private  PersonDao personDao;
 
     @Autowired
-    public PeopleServece(PeopleRepository peopleRepository) {
-        this.peopleRepository = peopleRepository;
+    public PeopleServiceImpl(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
+
     public List<Person> findAll() {
-       return peopleRepository.findAll();
+       return personDao.showAll();
     }
 
     public Person findById(int id){
-        Optional<Person> optional = peopleRepository.findById(id);
+        Optional<Person> optional = Optional.ofNullable(personDao.showById(id));
         return optional.orElse(null);
     }
 
     @Transactional
     public void save(Person person){
-        peopleRepository.save(person);
+        personDao.create(person);
     }
 
     @Transactional
     public void update(int id, Person newPerson){
         newPerson.setId(id);
-        peopleRepository.save(newPerson);
+        personDao.update(id, newPerson);
     }
 
     @Transactional
     public void delete(int id){
-        peopleRepository.deleteById(id);
+        personDao.delete(id);
     }
 
 
