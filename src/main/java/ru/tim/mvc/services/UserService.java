@@ -3,7 +3,7 @@ package ru.tim.mvc.services;
 import ru.tim.mvc.model.Person;
 import java.util.List;
 
-public interface PeopleService {
+public interface UserService {
 
     List<Person> findAll();
 

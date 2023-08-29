@@ -6,7 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.tim.mvc.model.Person;
-import ru.tim.mvc.services.PeopleServiceImpl;
+import ru.tim.mvc.services.UserService;
+import ru.tim.mvc.services.UserServiceImpl;
 import javax.validation.Valid;
 
 @Controller
@@ -14,10 +15,10 @@ import javax.validation.Valid;
 public class PeopleController {
 
 
-    private final PeopleServiceImpl peopleService;
+    private final UserService peopleService;
 
     @Autowired
-    private PeopleController(PeopleServiceImpl peopleServece) {
+    private PeopleController(UserService peopleServece) {
         this.peopleService = peopleServece;
     }
 
