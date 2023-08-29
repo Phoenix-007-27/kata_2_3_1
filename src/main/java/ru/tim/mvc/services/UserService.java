@@ -1,17 +1,17 @@
 package ru.tim.mvc.services;
 
-import ru.tim.mvc.model.Person;
+import ru.tim.mvc.model.User;
 import java.util.List;
 
 public interface UserService {
 
-    List<Person> findAll();
+    List<User> findAll();
 
-    Person findById(int id);
+    User findById(int id);
 
-    void save(Person person);
+    void save(User user);
 
-    void update(int id, Person newPerson);
+    void update(int id, User newUser);
 
     void delete(int id);
 

@@ -5,9 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/people/create}" th:method="POST" th:object="${person}">
+<form th:action="@{/people/create}" th:method="POST" th:object="${user}">
     <label for="name">Enter name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="name"/>
+    <br>
+    <label for="age">Enter age</label>
+    <input type="text" th:field="*{age}" id="age" placeholder="age"/>
     <br>
     <input type="submit" value="add new person"/>
     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red" >Name error</div>

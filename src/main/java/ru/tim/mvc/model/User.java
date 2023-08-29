@@ -1,13 +1,12 @@
 package ru.tim.mvc.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "Person")
-public class Person {
+@Table(name = "User")
+public class User {
 
 
     @Id
@@ -17,9 +16,20 @@ public class Person {
 
     @NotEmpty(message = "name should not be empty")
     @Size(min = 2, max = 10, message = "min 2 and max 10 letters")
-//    @Email(message = "email wrong")
+
     @Column
     private String name;
+
+    @Column
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public int getId() {
         return id;
@@ -37,11 +47,11 @@ public class Person {
         this.name = name;
     }
 
-    public Person() {
+    public User() {
 
     }
 
-    public Person(String name) {
+    public User(String name) {
         this.name = name;
     }
 }
