@@ -1,6 +1,8 @@
 package ru.tim.mvc.controller;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,6 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-
 
     private final UserService userService;
 
@@ -28,19 +29,19 @@ public class PeopleController {
         return "index";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public String findById(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.findById(id));
         return "show";
     }
 
-    @GetMapping("/create")
+    @GetMapping(value = "/create")
     public String form(@ModelAttribute("user") User user) {
         return "formTL";
     }
 
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create")
     public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "formTL";

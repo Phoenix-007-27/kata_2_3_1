@@ -15,7 +15,7 @@ public class User {
     private int id;
 
     @NotEmpty(message = "name should not be empty")
-    @Size(min = 2, max = 10, message = "min 2 and max 10 letters")
+    @Size(min = 2, max = 20, message = "min 2 and max 10 letters")
 
     @Column
     private String name;
